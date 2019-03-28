@@ -206,10 +206,13 @@
                         prices += parseInt($(this).parents('li').find('input.pric').val());
                         // aa += 1;
                     }
+
                 }
             });
-
-            $(".total").html('<span>￥</span>'+(conts)*(prices).toFixed(2));
+            // console.log(conts);
+            // console.log(prices);
+            // exit;
+             $(".total").html('<span>￥</span>'+(conts)*(prices).toFixed(2));
         }
 
          GetCount();

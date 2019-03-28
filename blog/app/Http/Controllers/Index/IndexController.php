@@ -171,7 +171,6 @@ class IndexController extends Controller
             return view('user/login');
         }else{
             $goods=Goods::join('cart','goods.goods_id','=','cart.goods_id')->where(['user_id'=>$user_id])->get();
-
         }
         return view("index.indexshopcar",['goods'=>$goods]);
     }
@@ -198,6 +197,20 @@ public function somedel(Request $request)
     }else{
         echo 2;
     }
+}
+//搜索
+public function search(Request $request)
+{
+
+    $search=$request->search;
+   $model=new goods;
+    if($search!=''){
+        $data=$model->where('goods_name','like',"%$search%")->get();
+    }else{
+        $data=$model->get();
+    }
+//  print_r($data);die;
+    return view('index.div',['data'=>$data]);
 }
 
 }

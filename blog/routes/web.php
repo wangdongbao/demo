@@ -18,14 +18,15 @@ Route::any("shopcontent/{id}","Index\IndexController@indexcontent");
 Route::any("index/indexshopcar","Index\IndexController@indexshopcar")->Middleware('session');
 Route::any("index/cartadd","Index\IndexController@cartadd");
 Route::any("index/cartdel","Index\IndexController@cartdel");
-Route::any("index/indexuser","Index\IndexController@indexuser");
+Route::any("index/indexuser","Index\IndexController@indexuser")->Middleware('session');
 Route::any("index/indexshop/{id}","Index\IndexController@indexshopid");
 Route::any("index","Index\IndexController@Index");
+
 Route::post("index/indexshopajax","Index\IndexController@indexshopajax");
 Route::post("index/isnew","Index\IndexController@isnew");
 Route::post("index/price","Index\IndexController@price");
 Route::post("index/somedel","Index\IndexController@somedel");
-
+Route::post("index/search","Index\IndexController@search");
 Route::any("address/address","Index\AddressController@address");
 
 
@@ -59,3 +60,8 @@ Route::any("address/addressdel","Index\AddressController@addressdel");
 Route::any("address/addressup/{id}","Index\AddressController@addressup");
 Route::any("address/addressupdo","Index\AddressController@addressupdo");
 Route::any("address/addressmoren","Index\AddressController@addressmoren");
+Route::prefix('alipay')->group(function () {
+    Route::any('mobilepay','AliPayController@mobilepay');
+    Route::any('return','AliPayController@re');
+    Route::any('notify','AliPayController@notify');
+});

@@ -19,7 +19,7 @@
                 </div>
                 <div class="input-box">
                     <i class="s-icon"></i>
-                    <input type="text" placeholder="输入“汽车”试试" id="txtSearch" />
+                    <input type="text"  placeholder="输入“汽车”试试" id="txtSearch" />
                     <i class="c-icon" id="btnClearInput" style="display: none"></i>
                 </div>
             </div>
@@ -141,6 +141,18 @@
                     }
                 )
             });
+            //搜索
+            $(document).on('click','.s-icon',function(){
+                var search=$('#txtSearch').val();
+                var _token=$("#_token").val();
+                $.post(
+                    "{{url('index/search')}}",
+                    {_token:_token,search:search},
+                    function(res){
+                        $("#pullrefresh").html(res);
+                    }
+                )
+            })
             $(document).on('click',"#bb",function(){
                 var _this=$(this);
                 var _token=$("#_token").val();
@@ -154,6 +166,7 @@
                     }
                 )
             });
+            //最新
             $(document).on('click',"#is_new",function(){
                 var _token=$("#_token").val();
                 $(this).css("color",'red');
@@ -166,6 +179,7 @@
                     }
                 )
             });
+            //价格
             $(document).on('click',"#self_price",function(){
                 var _token=$("#_token").val();
                 var self_price=$(this).next().html();

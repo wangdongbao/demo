@@ -23,8 +23,8 @@
 <div>
         <div class="g-pay-lst">
             <ul>
-                @foreach($goodsinfo as $v)
-                <li>
+                @foreach($goods as $v)
+                <li id="add" goods_id="{{$v->goods_id}}">
                     <a href="">
                         <span>
                             <img src="{{url($v->goods_img)}}" border="0" alt="">
@@ -34,7 +34,7 @@
                                 
                                     {{$v->goods_desc}}
                             </dt>
-                            <dd><em class="price">1</em>人次/<em>￥{{$v->self_price}}</em></dd>
+                            <dd><em class="price">{{$v->buy_num}}</em>个/<em>￥{{$v->self_price}}</em></dd>
                         </dl>
                     </a>
                 </li>
@@ -43,7 +43,7 @@
             <div id="divMore">
                 
             </div>
-            <p class="gray9">总需支付金额：{{$info}}<em class="orange"><i>￥</i></em></p>
+            <p class="gray9">总需支付金额：<em style="color: red"><i>￥{{$info}}</i></em></p>
         </div>
 
         <div class="other_pay marginB">
@@ -55,7 +55,7 @@
             	<i></i>账户总额：<span class="gray9">(￥<em>0.00</em>)</span><em class="orange fr"></em>
             </a>
             <a href="javascript:;" class="wzf checked">
-            	<b class="z-set"></b>第三方支付<em class="orange fr"><span class="colorbbb">需要支付{{$info}}&nbsp;</span><b>￥</b></em>
+            	<b class="z-set"></b>第三方支付<em class=" fr" style="color: #ff1719"><span class="colorbbb">需要支付&nbsp;</span><b>￥</b>{{$info}}</em>
             </a>
             <div class="net-pay">
                 <a href="javascript:;" class="checked" id="jdPay">
@@ -83,13 +83,13 @@
                     <div class="i-block" data-error="i_error">
                         <div class="i-block six-password">
                             <input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required" value="" name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
-                            <div tabindex="0" class="sixDigitPassword-box" style="width:99%;">
+                            <div tabindex="0" class="sixDigitPassword-box"  style="width:99%;">
                                 <i style="width: 16%; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
-                                <i style="width: 16%;" class=""><b style="visibility: hidden;"></b></i>
-                                <i style="width: 16%;" class=""><b style="visibility: hidden;"></b></i>
-                                <i style="width:16%;" class=""><b style="visibility: hidden;"></b></i>
-                                <i style="width: 16%;" class=""><b style="visibility: hidden;"></b></i>
-                                <i style="width: 16%;" class=""><b style="visibility: hidden;"></b></i>
+                                <i style="width: 16%;" class="" id="pwd"><b style="visibility: hidden;"></b></i>
+                                <i style="width: 16%;" class="" id="pwd"><b style="visibility: hidden;"></b></i>
+                                <i style="width:16%;" class="" id="pwd"><b style="visibility: hidden;"></b></i>
+                                <i style="width: 16%;" class="" id="pwd"><b style="visibility: hidden;"></b></i>
+                                <i style="width: 16%;" class="" id="pwd"><b style="visibility: hidden;"></b></i>
                                 <!-- <span style="width: 16%; left: 285px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span> -->
                             </div>
                         </div>
@@ -128,7 +128,7 @@
 		// 潮购不可支付
 		if(chaomoney<total){
 			$('.chaomoney').css('background','#e2e2e2');
-			
+
 		}
 
 
@@ -203,9 +203,7 @@
                 }else{
                     _this.eq(l).removeClass("active");
                     _this.eq(l).find('b').css('visibility', l < k ? 'visible' : 'hidden');
-                    
-                }               
-            
+                }
             if(k === 6){
                 j = 5;
             }else{
@@ -229,7 +227,13 @@
             content: $('.paywrapp')
         })
     })
-        
+    $("#cancelbtn").click(function(){
+        history.go(0);
+    })
+     $("#subbtn").click(function () {
+       var goods_id=$("#add").val();
+       console.log(goods_id);
+     })
 </script>
 </body>
 </html>

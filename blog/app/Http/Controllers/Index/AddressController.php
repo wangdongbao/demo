@@ -24,14 +24,14 @@ class AddressController extends Controller
     * */
     public function addressadd()
     {
-    	
+
         return view("address.addressadd");
     }
     /*
     * @地址添加
     * */
     public function addressdo(Request $request)
-    {	
+    {
     	$data=$request->all();
 //    	print_r($data);die;
     	$data['user_id']=session('user_id');
@@ -68,12 +68,17 @@ class AddressController extends Controller
     	];
     	$address=new address;
     	$res=$address::where($where)->update(['address_status'=>2]);
-    }	
+        if($res){
+            echo 1;
+        }else{
+            echo 2;
+        }
+    }
     /*
     * @地址修改
     * */
     public function addressup($id)
-    {	
+    {
     	$user_id=session('user_id');
     	$where=[
     		'user_id'=>$user_id,

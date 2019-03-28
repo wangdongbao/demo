@@ -37,7 +37,7 @@
       <li class="addr-detail"><em>详细地址</em><input type="text" value="{{$v->address_detail}}" placeholder="20个字以内" id="address_detail" class="addr"></li>
     </ul>
     @if($v->is_default==1)
-    <div class="setnormal"><span>设为默认地址</span><input type="checkbox" id="is_default" checked lay-skin="switch">  </div>
+    <div class="setnormal"><span>已默认地址</span><input type="checkbox" id="is_default" checked lay-skin="switch">  </div>
     @else
     <div class="setnormal"><span>设为默认地址</span><input type="checkbox" id="is_default" lay-skin="switch">  </div>
     @endif

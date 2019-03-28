@@ -38,8 +38,6 @@ public function pay(Request $request)
 //结算
 public function payment($id)
 {
-
-
     $cart_id=explode(',',rtrim($id,','));
 
     $data=Cart::whereIn('cart_id',$cart_id)->get();
@@ -50,12 +48,12 @@ public function payment($id)
     }
     $goodsinfo=Goods::whereIn('goods_id',$goods_id)->get();
     $goods=Goods::join('cart','goods.goods_id','=','cart.goods_id')->get();
+
     $price=0;
     foreach($goods as $v){
         $info=$price+=$v['self_price']*$v['buy_num'];
     }
     //print_r($goodsinfo);
-    return view('order.payment',['goodsinfo'=>$goodsinfo,'info'=>$info]);
+    return view('order.payment',['goods'=>$goods,'info'=>$info]);
 }
-
 }

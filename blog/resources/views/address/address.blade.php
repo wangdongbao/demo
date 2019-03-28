@@ -35,10 +35,12 @@
             <li class="a-set">
                 @if($v->is_default == 1)
                 <s class="z-set" style="margin-top: 6px;"></s>
+                    <span class="moren">已默认</span>
                 @else
                 <s class="z-defalt" style="margin-top: 6px;"></s>
+                    <span class="moren">设为默认</span>
                 @endif
-                <span class="moren">设为默认</span>
+
                 <div class="fr">
                     <span class="edit">编辑</span>
                     <span class="remove">删除</span>
@@ -87,8 +89,15 @@
             "/address/addressdel",
             {address_id:address_id,_token:'{{csrf_token()}}'},
             function(res){
-                alert('删除地址成功');
-                history.go(0);
+                if(res==1){
+                    alert('删除地址成功');
+                    history.go(0);
+                }else{
+                    alert('删除地址失败');
+                    history.go(0);
+                }
+
+
             }
         )
         

@@ -101,7 +101,7 @@
                     }else if(res==3){
                         alert("登陆失败");
                     }else{
-                       location.href="{{url('index/indexshopcar')}}";
+                       location.href="{{url('index')}}";
                     }
                 }
             )
