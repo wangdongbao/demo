@@ -14,31 +14,27 @@
 
                 @foreach($goods as $v)
                     <input type="hidden" id="_token" value="{{csrf_token()}}">
-                <li  id="del" goods_id={{$v->goods_id}} cart_id={{$v->cart_id}}>
-                    <s class="xuan current" cart_id={{$v->cart_id}}></s>
-                    <a class="fl u-Cart-img" href="{{url('index/shopcontent/'.$v->goods_id)}}" >
+                    <li  id="del" goods_id={{$v->goods_id}} cart_id={{$v->cart_id}}>
+                        <s class="xuan current" cart_id={{$v->cart_id}}></s>
+                        <a class="fl u-Cart-img" href="{{url('index/shopcontent/'.$v->goods_id)}}" >
 
-                        <img src="{{url($v->goods_img)}}" border="0" alt="">
-                    </a>
-                    <div class="u-Cart-r">
-                        <a href="/v44/product/12501977.do" class="gray6">{{$v->goods_name}}{{$v->desc}}</a>
-                        <span class="gray9">
+                            <img src="{{url($v->goods_img)}}" border="0" alt="">
+                        </a>
+                        <div class="u-Cart-r">
+                            <a href="/v44/product/12501977.do" class="gray6">{{$v->goods_name}}{{$v->desc}}</a>
+                            <span class="gray9">
                             <em>剩余{{$v->goods_num-$v->buy_num}}件</em>
                         </span>
-                        <div >
 
-                           <input type="text" value={{$v->self_price}} class="pric">一件
+                            <div class="num-opt">
+                                <em class="num-mius dis min"><i></i></em>
 
-
+                                <input class="text_box" name="num" maxlength="6" self="{{$v->self_price}}" type="text" value={{$v->buy_num}} codeid="12501977">
+                                <em class="num-add add"><i></i></em>
+                            </div>
+                            <a href="javascript:;" name="delLink" cid="12501977" isover="0" goods_id={{$v->goods_id}} class="z-del"><s></s></a>
                         </div>
-                        <div class="num-opt">
-                            <em class="num-mius dis min"><i></i></em>
-                            <input class="text_box" name="num" maxlength="6" type="text" value={{$v->buy_num}} codeid="12501977">
-                            <em class="num-add add"><i></i></em>
-                        </div>
-                        <a href="javascript:;" name="delLink" cid="12501977" isover="0" goods_id={{$v->goods_id}} class="z-del"><s></s></a>
-                    </div>
-                </li>
+                    </li>
                 @endforeach
 
 
@@ -62,7 +58,7 @@
             <ul>
                 <li class="f_home"><a href="{{url('index')}}" ><i></i>潮购</a></li>
                 <li class="f_announced"><a href="{{url('index/indexshop')}}" ><i></i>全部商品</a></li>
-             
+
                 <li class="f_car"><a id="btnCart" href="{{url('index/indexshopcar')}}" class="hover"><i></i>购物车</a></li>
                 <li class="f_personal"><a href="{{url('index/indexuser')}}" ><i></i>我的潮购</a></li>
             </ul>
@@ -74,25 +70,26 @@
 @section("my-js")
     <!---商品加减算总数---->
     <script type="text/javascript">
-    $(function () {
-        $(".add").click(function () {
-            var t = $(this).prev();
-            t.val(parseInt(t.val()) + 1);
-            GetCount();
-        })
-        $(".min").click(function () {
-            var t = $(this).next();
-            if(t.val()>1){
-                t.val(parseInt(t.val()) - 1);
+        $(function () {
+            $(".add").click(function () {
+                var t = $(this).prev();
+                t.val(parseInt(t.val()) + 1);
                 GetCount();
-            }
+            })
+            $(".min").click(function () {
+                var t = $(this).next();
+                if(t.val()>1){
+                    t.val(parseInt(t.val()) - 1);
+                    GetCount();
+                }
+            })
         })
-    })
-</script>
+    </script>
     <script>
 
         // 全选
         $(".quanxuan").click(function () {
+
             if($(this).hasClass('current')){
                 $(this).removeClass('current');
                 $(".g-Cart-list .xuan").each(function () {
@@ -123,14 +120,14 @@
             $.post(
                 "{{url('index/cartdel')}}",
                 {goods_id:goods_id,_token:_token},
-                 function(res){
-                         // console.log(res);
+                function(res){
+                    // console.log(res);
                     if(res==1){
 
                         alert('删除成功');
                         $('#del').remove();
-                     }
-                 }
+                    }
+                }
             )
         });
         //批删
@@ -156,26 +153,9 @@
                 }
             )
         })
-        //结算
-        $('.payment').click(function(){
-            var cart_id='';
-            $('.current').each(function(){
-                cart_id+=$(this).attr('cart_id')+',';
-            })
-
-            $.post(
-                "/order/pay",
-                {_token:'{{csrf_token()}}',cart_id:cart_id},
-                function(res){
-                    console.log(res);
-
-                    location.href='/order/payment/'+res;
-
-                }
-            )
-        })
         // 单选
         $(".g-Cart-list .xuan").click(function () {
+
             if($(this).hasClass('current')){
 
 
@@ -194,6 +174,23 @@
             GetCount();
             //alert(conts);
         });
+        $('.payment').click(function(){
+            var cart_id='';
+            $('.current').each(function(){
+                cart_id+=$(this).attr('cart_id')+',';
+            })
+
+            $.post(
+                "/order/pay",
+                {_token:'{{csrf_token()}}',cart_id:cart_id},
+                function(res){
+                    console.log(res);
+
+                    location.href='/order/payment/'+res;
+
+                }
+            )
+        })
         // 已选中的总额
         function GetCount() {
             var conts = 0;
@@ -202,8 +199,9 @@
             $(".g-Cart-list .xuan").each(function () {
                 if ($(this).hasClass("current")) {
                     for (var i = 0; i < $(this).length; i++) {
-                        conts += parseInt($(this).parents('li').find('input.text_box').val());
-                        prices += parseInt($(this).parents('li').find('input.pric').val());
+                        var prices= parseInt($(this).parents('li').find('input.text_box').val());
+
+                        conts += parseInt($(this).parents('li').find('input.text_box').attr('self'))*prices;
                         // aa += 1;
                     }
 
@@ -212,9 +210,9 @@
             // console.log(conts);
             // console.log(prices);
             // exit;
-             $(".total").html('<span>￥</span>'+(conts)*(prices).toFixed(2));
+            $(".total").html('<span>￥</span>'+(conts).toFixed(2));
         }
 
-         GetCount();
+        GetCount();
     </script>
 @endsection
