@@ -65,4 +65,4 @@ Route::prefix('alipay')->group(function () {
     Route::any('return','AliPayController@re');
     Route::any('notify','AliPayController@notify');
 });
-Route::get('text','Weixin\WeixinController@valid');
+Route::get('/text','Weixin\WeixinController@valid');
