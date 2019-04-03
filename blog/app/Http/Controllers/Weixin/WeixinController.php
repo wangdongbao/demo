@@ -1,5 +1,9 @@
 <?php
+namespace App\Http\Controllers\Weixin;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Storage;
 /*
  * 第一步：填写服务器url
  * 第二步：微信服务器发送一个get请求到填写的url 携带四个参数 signature timestamp nonce echostr
@@ -11,17 +15,18 @@
 
 define("WEIXINTOKEN",'weixin1809B');
 
-$wechatobj = new WechatApiTest();
+$wechatobj = new WeixinController();
 $wechatobj->valid();
 
-Class WechatApiTest
+Class WeixinController extends Controller
 {
     public function valid()
     {
         $echostr  =  $_GET['echostr'];
-        if($this->CheckSignature()){
-            echo $echostr;exit;
-        }
+        echo $echostr;
+//        if($this->CheckSignature()){
+//            echo $echostr;exit;
+//        }
     }
     private function CheckSignature()
     {
