@@ -13,10 +13,10 @@ use Storage;
  * 第六步：确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败
  * */
 
-//define("WEIXINTOKEN",'weixin1809B');
-//
-//$wechatobj = new WeixinController();
-//$wechatobj->valid();
+define("WEIXINTOKEN",'weixin1809B');
+
+$wechatobj = new WeixinController();
+$wechatobj->valid();
 
 Class WeixinController extends Controller
 {
