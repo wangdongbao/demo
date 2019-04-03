@@ -174,6 +174,7 @@
             GetCount();
             //alert(conts);
         });
+        //结算
         $('.payment').click(function(){
             var cart_id='';
             $('.current').each(function(){
